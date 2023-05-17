@@ -2,7 +2,23 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.6'
     id 'io.spring.dependency-management' version '1.1.0'
+    id 'checkstyle'
+    id 'jacoco'
 }
+
+checkstyle {
+    toolVersion = "8.44"
+    configFile = file("config/checkstyle.xml")
+}
+
+jacoco {
+    toolVersion = '0.8.7'
+}
+
+test {
+    finalizedBy jacocoTestReport // Generates the JaCoCo report after tests run
+}
+
 
 group = 'com.thoughtworks'
 version = '0.0.1-SNAPSHOT'

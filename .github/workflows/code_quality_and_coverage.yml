@@ -1,21 +1,15 @@
-name: build and test
+name: Code Quality and Coverage
 
 on:
   push:
     branches:
-      - main
-      - master
-    paths-ignore:
-      - ".github/**/*.{yml,yaml}"
-      - "!.github/workflows/gradle-build.yaml"
-      - ".gitignore"
+      main
   pull_request:
     branches:
-      - "main"
+      - main
 
 jobs:
-  build:
-
+  code_quality_and_coverage:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,13 +19,11 @@ jobs:
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
-          java-version: 17
+          java-version: '17'
           distribution: 'adopt'
-          cache: 'gradle'
 
       - name: Build with Gradle
         run: ./gradlew build --no-daemon
 
-      - name: Run tests
-        run: ./gradlew test --no-daemon
-
+      - name: Generate JaCoCo report
+        run: ./gradlew test jacocoTestReport --no-daemon
